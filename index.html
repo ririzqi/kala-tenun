@@ -12,7 +12,6 @@ body {
     background-size: 300px;
 }
 
-/* LOGIN */
 #login {
     width: 320px;
     margin: 120px auto;
@@ -42,7 +41,6 @@ body {
     cursor: pointer;
 }
 
-/* APP */
 #app {
     display: none;
     width: 90%;
@@ -110,10 +108,8 @@ th, td {
 }
 </style>
 </head>
-
 <body>
 
-<!-- LOGIN -->
 <div id="login">
     <h2>LOGIN KALA TENUN</h2>
     <input type="text" id="username" placeholder="Username">
@@ -122,144 +118,183 @@ th, td {
     <p id="error" style="color:red;text-align:center;"></p>
 </div>
 
-<!-- SISTEM -->
 <div id="app">
-
 <button class="btn-back" onclick="logout()">⬅ Logout</button>
 
+<!-- Produk -->
 <div class="box">
 <h2>Form Input Produk</h2>
 <input type="text" id="namaProduk" placeholder="Nama Produk">
 <input type="number" id="hargaProduk" placeholder="Harga">
-<input type="text" placeholder="Deskripsi">
+<input type="text" id="deskripsiProduk" placeholder="Deskripsi">
 <input type="number" id="stokProduk" placeholder="Stok">
-<select>
+<select id="kategoriProduk">
 <option>Pilih Kategori</option>
 <option>Kain Tenun</option>
 <option>Aksesoris</option>
 </select>
-
 <button class="btn" onclick="simpanProduk()">Simpan</button>
 <button class="btn-delete" onclick="hapusProduk()">Hapus</button>
-
 <table>
-<tr>
-<th>Nama</th>
-<th>Harga</th>
-<th>Stok</th>
-</tr>
+<tr><th>Nama</th><th>Harga</th><th>Stok</th><th>Kategori</th></tr>
 <tbody id="dataProduk"></tbody>
 </table>
 </div>
 
+<!-- Promosi -->
 <div class="box">
 <h2>Form Input Promosi / Diskon</h2>
-<input type="text" placeholder="Kode Promo">
-<input type="number" placeholder="Diskon (%)">
-<input type="date">
-<input type="text" placeholder="Keterangan">
-<button class="btn">Simpan</button>
-<button class="btn-delete">Hapus</button>
+<input type="text" id="kodePromo" placeholder="Kode Promo">
+<input type="number" id="diskonPromo" placeholder="Diskon (%)">
+<input type="date" id="tanggalPromo">
+<input type="text" id="ketPromo" placeholder="Keterangan">
+<button class="btn" onclick="simpanPromo()">Simpan</button>
+<button class="btn-delete" onclick="hapusPromo()">Hapus</button>
+<table>
+<tr><th>Kode</th><th>Diskon</th><th>Tanggal</th><th>Keterangan</th></tr>
+<tbody id="dataPromo"></tbody>
+</table>
 </div>
 
+<!-- Status Pesanan -->
 <div class="box">
 <h2>Form Update Status Pesanan</h2>
-<input type="text" placeholder="ID Pesanan">
-<input type="text" placeholder="Nama Pelanggan">
-<input type="date">
-<select>
+<input type="text" id="idPesanan" placeholder="ID Pesanan">
+<input type="text" id="namaPelanggan" placeholder="Nama Pelanggan">
+<input type="date" id="tanggalPesanan">
+<select id="statusPesanan">
 <option>Diproses</option>
 <option>Dikirim</option>
 <option>Selesai</option>
 </select>
-<textarea placeholder="Keterangan"></textarea>
-<button class="btn">Simpan</button>
+<textarea id="ketPesanan" placeholder="Keterangan"></textarea>
+<button class="btn" onclick="simpanStatus()">Simpan</button>
+<button class="btn-delete" onclick="hapusStatus()">Hapus</button>
+<table>
+<tr><th>ID</th><th>Nama</th><th>Tanggal</th><th>Status</th></tr>
+<tbody id="dataStatus"></tbody>
+</table>
 </div>
 
+<!-- Penjualan -->
 <div class="box">
 <h2>Form Input Data Penjualan</h2>
-<input type="date">
-<input type="text" placeholder="Nama Produk">
-<input type="number" placeholder="Jumlah">
-<input type="number" placeholder="Harga">
-<input type="number" placeholder="Total" readonly>
-<button class="btn">Simpan</button>
+<input type="date" id="tanggalJual">
+<input type="text" id="namaJual" placeholder="Nama Produk">
+<input type="number" id="jumlahJual" placeholder="Jumlah">
+<input type="number" id="hargaJual" placeholder="Harga">
+<input type="number" id="totalJual" placeholder="Total" readonly>
+<button class="btn" onclick="simpanPenjualan()">Simpan</button>
+<button class="btn-delete" onclick="hapusPenjualan()">Hapus</button>
+<table>
+<tr><th>Tanggal</th><th>Produk</th><th>Jumlah</th><th>Harga</th><th>Total</th></tr>
+<tbody id="dataPenjualan"></tbody>
+</table>
 </div>
 
+<!-- Pencarian Produk -->
 <div class="box">
 <h2>Form Pencarian Produk</h2>
-<input type="text" placeholder="Nama Produk">
-<select>
+<input type="text" id="namaCari" placeholder="Nama Produk">
+<select id="kategoriCari">
 <option>Pilih Kategori</option>
 <option>Kain Tenun</option>
 <option>Aksesoris</option>
 </select>
-<button class="btn">Cari</button>
-<button class="btn-delete">Reset</button>
+<button class="btn" onclick="cariProduk()">Cari</button>
+<button class="btn-delete" onclick="resetCari()">Reset</button>
+<table>
+<tr><th>Nama</th><th>Harga</th><th>Stok</th><th>Kategori</th></tr>
+<tbody id="hasilCari"></tbody>
+</table>
+</div>
+
+<!-- Ulasan -->
+<div class="box">
+<h2>Form Ulasan Produk</h2>
+<select id="produkUlasan">
+<option>Pilih Produk</option>
+</select>
+<input type="number" id="ratingUlasan" placeholder="Rating (1-5)">
+<textarea id="komentarUlasan" placeholder="Komentar"></textarea>
+<button class="btn" onclick="kirimUlasan()">Kirim Ulasan</button>
+<button class="btn-delete" onclick="batalUlasan()">Batal</button>
 </div>
 
 <div class="box">
-<h2>Form Ulasan Produk</h2>
-<select>
-<option>Pilih Produk</option>
-</select>
-<input type="text" placeholder="Rating">
-<textarea placeholder="Komentar"></textarea>
-<button class="btn">Kirim Ulasan</button>
-<button class="btn-delete">Batal</button>
-</div>
-
+<h2>Menu Ulasan</h2>
+<button class="btn" onclick="tampilSemuaUlasan()">Semua Ulasan</button>
+<button class="btn" onclick="tampilUlasanTertinggi()">Ulasan Tertinggi</button>
+<button class="btn" onclick="tampilUlasanTerbaru()">Ulasan Terbaru</button>
+<div id="listUlasan"></div>
 </div>
 
 <script>
-let produk = [];
+let produk = [], promo = [], status = [], penjualan = [], ulasan = [];
 
-function loginUser() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
+// LOGIN & LOGOUT
+function loginUser(){
+    if(username.value=="user" && password.value=="1234"){
+        login.style.display="none";
+        app.style.display="block";
+        updateProdukUlasan();
+    } else error.innerText="Username atau password salah!";
+}
+function logout(){app.style.display="none"; login.style.display="block";}
 
-    if (user === "user" && pass === "1234") {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("app").style.display = "block";
-        document.getElementById("error").innerText = "";
-    } else {
-        document.getElementById("error").innerText =
-        "Username atau password salah!";
-    }
+// PRODUK
+function simpanProduk(){
+    produk.push({nama:namaProduk.value,harga:hargaProduk.value,stok:stokProduk.value,kategori:kategoriProduk.value});
+    tampilProduk(); updateProdukUlasan();
+}
+function hapusProduk(){produk.pop(); tampilProduk(); updateProdukUlasan();}
+function tampilProduk(){
+    dataProduk.innerHTML=""; produk.forEach(p=>dataProduk.innerHTML+=`<tr><td>${p.nama}</td><td>${p.harga}</td><td>${p.stok}</td><td>${p.kategori}</td></tr>`);
+}
+function updateProdukUlasan(){
+    produkUlasan.innerHTML='<option>Pilih Produk</option>'; produk.forEach(p=>produkUlasan.innerHTML+=`<option>${p.nama}</option>`);
 }
 
-function logout() {
-    document.getElementById("app").style.display = "none";
-    document.getElementById("login").style.display = "block";
-    document.getElementById("username").value = "";
-    document.getElementById("password").value = "";
-}
+// PROMO
+function simpanPromo(){promo.push({kode:kodePromo.value,diskon:diskonPromo.value,tanggal:tanggalPromo.value,keterangan:ketPromo.value}); tampilPromo();}
+function hapusPromo(){promo.pop(); tampilPromo();}
+function tampilPromo(){dataPromo.innerHTML=""; promo.forEach(p=>dataPromo.innerHTML+=`<tr><td>${p.kode}</td><td>${p.diskon}</td><td>${p.tanggal}</td><td>${p.keterangan}</td></tr>`);}
 
-function simpanProduk() {
-    produk.push({
-        nama: namaProduk.value,
-        harga: hargaProduk.value,
-        stok: stokProduk.value
-    });
-    tampilProduk();
-}
+// STATUS PESANAN
+function simpanStatus(){status.push({id:idPesanan.value,nama:namaPelanggan.value,tanggal:tanggalPesanan.value,status:statusPesanan.value,keterangan:ketPesanan.value}); tampilStatus();}
+function hapusStatus(){status.pop(); tampilStatus();}
+function tampilStatus(){dataStatus.innerHTML=""; status.forEach(s=>dataStatus.innerHTML+=`<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.tanggal}</td><td>${s.status}</td></tr>`);}
 
-function tampilProduk() {
-    dataProduk.innerHTML = "";
-    produk.forEach(p => {
-        dataProduk.innerHTML += `
-        <tr>
-            <td>${p.nama}</td>
-            <td>${p.harga}</td>
-            <td>${p.stok}</td>
-        </tr>`;
-    });
+// PENJUALAN
+function simpanPenjualan(){ 
+    let total = jumlahJual.value*hargaJual.value; totalJual.value=total;
+    penjualan.push({tanggal:tanggalJual.value,nama:namaJual.value,jumlah:jumlahJual.value,harga:hargaJual.value,total:total}); tampilPenjualan();
 }
+function hapusPenjualan(){penjualan.pop(); tampilPenjualan();}
+function tampilPenjualan(){dataPenjualan.innerHTML=""; penjualan.forEach(p=>dataPenjualan.innerHTML+=`<tr><td>${p.tanggal}</td><td>${p.nama}</td><td>${p.jumlah}</td><td>${p.harga}</td><td>${p.total}</td></tr>`);}
 
-function hapusProduk() {
-    produk.pop();
-    tampilProduk();
+// PENCARIAN
+function cariProduk(){
+    let nama=namaCari.value.toLowerCase(), kat=kategoriCari.value;
+    let hasil=produk.filter(p=>(p.nama.toLowerCase().includes(nama)) && (kat=="Pilih Kategori" || p.kategori==kat));
+    hasilCari.innerHTML=""; hasil.forEach(h=>hasilCari.innerHTML+=`<tr><td>${h.nama}</td><td>${h.harga}</td><td>${h.stok}</td><td>${h.kategori}</td></tr>`);
 }
+function resetCari(){hasilCari.innerHTML=""; namaCari.value=""; kategoriCari.value="Pilih Kategori";}
+
+// ULASAN
+function kirimUlasan(){
+    if(produkUlasan.value=="Pilih Produk" || !ratingUlasan.value || !komentarUlasan.value){alert("Lengkapi semua data!"); return;}
+    ulasan.push({produk:produkUlasan.value,rating:ratingUlasan.value,komentar:komentarUlasan.value});
+    alert("Ulasan berhasil dikirim!"); ratingUlasan.value=""; komentarUlasan.value=""; tampilSemuaUlasan();
+}
+function batalUlasan(){produkUlasan.value="Pilih Produk"; ratingUlasan.value=""; komentarUlasan.value="";}
+function tampilSemuaUlasan(){listUlasan.innerHTML="<ul>"+ulasan.map(u=>`<li>${u.produk}: ${u.rating} - ${u.komentar}</li>`).join("")+"</ul>";}
+function tampilUlasanTertinggi(){listUlasan.innerHTML="<ul>"+[...ulasan].sort((a,b)=>b.rating-a.rating).map(u=>`<li>${u.produk}: ${u.rating} - ${u.komentar}</li>`).join("")+"</ul>";}
+function tampilUlasanTerbaru(){listUlasan.innerHTML="<ul>"+ulasan.slice().reverse().map(u=>`<li>${u.produk}: ${u.rating} - ${u.komentar}</li>`).join("")+"</ul>";}
+
+// Auto total di penjualan
+jumlahJual.addEventListener("input",()=>{totalJual.value=jumlahJual.value*hargaJual.value;});
+hargaJual.addEventListener("input",()=>{totalJual.value=jumlahJual.value*hargaJual.value;});
 </script>
 
 </body>
