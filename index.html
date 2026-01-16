@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>KALA TENUN - Sistem Pemasaran</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: url("tenun-bg.jpg") repeat;
+    background-size: 300px;
+}
+
+/* LOGIN */
+#login {
+    width: 320px;
+    margin: 120px auto;
+    background: rgba(255,255,255,0.95);
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+#login h2 {
+    text-align: center;
+    color: #1e5a6a;
+}
+
+#login input {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+}
+
+#login button {
+    width: 100%;
+    padding: 8px;
+    background: #1e5a6a;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* APP */
+#app {
+    display: none;
+    width: 90%;
+    margin: 20px auto;
+}
+
+.box {
+    background: rgba(255,255,255,0.97);
+    border: 3px solid #1e5a6a;
+    margin: 25px 0;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.box h2 {
+    background: #1e5a6a;
+    color: white;
+    padding: 10px;
+    margin: -15px -15px 15px -15px;
+    text-align: center;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 6px;
+    margin: 5px 0;
+}
+
+button {
+    padding: 7px 14px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.btn {
+    background: #2fa4b6;
+    color: white;
+    border: none;
+}
+
+.btn-delete {
+    background: #e74c3c;
+    color: white;
+    border: none;
+}
+
+.btn-back {
+    background: #444;
+    color: white;
+    border: none;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #333;
+}
+
+th, td {
+    padding: 6px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+<div id="login">
+    <h2>LOGIN KALA TENUN</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="loginUser()">Login</button>
+    <p id="error" style="color:red;text-align:center;"></p>
+</div>
+
+<!-- SISTEM -->
+<div id="app">
+
+<button class="btn-back" onclick="logout()">⬅ Logout</button>
+
+<div class="box">
+<h2>Form Input Produk</h2>
+<input type="text" id="namaProduk" placeholder="Nama Produk">
+<input type="number" id="hargaProduk" placeholder="Harga">
+<input type="text" placeholder="Deskripsi">
+<input type="number" id="stokProduk" placeholder="Stok">
+<select>
+<option>Pilih Kategori</option>
+<option>Kain Tenun</option>
+<option>Aksesoris</option>
+</select>
+
+<button class="btn" onclick="simpanProduk()">Simpan</button>
+<button class="btn-delete" onclick="hapusProduk()">Hapus</button>
+
+<table>
+<tr>
+<th>Nama</th>
+<th>Harga</th>
+<th>Stok</th>
+</tr>
+<tbody id="dataProduk"></tbody>
+</table>
+</div>
+
+<div class="box">
+<h2>Form Input Promosi / Diskon</h2>
+<input type="text" placeholder="Kode Promo">
+<input type="number" placeholder="Diskon (%)">
+<input type="date">
+<input type="text" placeholder="Keterangan">
+<button class="btn">Simpan</button>
+<button class="btn-delete">Hapus</button>
+</div>
+
+<div class="box">
+<h2>Form Update Status Pesanan</h2>
+<input type="text" placeholder="ID Pesanan">
+<input type="text" placeholder="Nama Pelanggan">
+<input type="date">
+<select>
+<option>Diproses</option>
+<option>Dikirim</option>
+<option>Selesai</option>
+</select>
+<textarea placeholder="Keterangan"></textarea>
+<button class="btn">Simpan</button>
+</div>
+
+<div class="box">
+<h2>Form Input Data Penjualan</h2>
+<input type="date">
+<input type="text" placeholder="Nama Produk">
+<input type="number" placeholder="Jumlah">
+<input type="number" placeholder="Harga">
+<input type="number" placeholder="Total" readonly>
+<button class="btn">Simpan</button>
+</div>
+
+<div class="box">
+<h2>Form Pencarian Produk</h2>
+<input type="text" placeholder="Nama Produk">
+<select>
+<option>Pilih Kategori</option>
+<option>Kain Tenun</option>
+<option>Aksesoris</option>
+</select>
+<button class="btn">Cari</button>
+<button class="btn-delete">Reset</button>
+</div>
+
+<div class="box">
+<h2>Form Ulasan Produk</h2>
+<select>
+<option>Pilih Produk</option>
+</select>
+<input type="text" placeholder="Rating">
+<textarea placeholder="Komentar"></textarea>
+<button class="btn">Kirim Ulasan</button>
+<button class="btn-delete">Batal</button>
+</div>
+
+</div>
+
+<script>
+let produk = [];
+
+function loginUser() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+
+    if (user === "user" && pass === "1234") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("app").style.display = "block";
+        document.getElementById("error").innerText = "";
+    } else {
+        document.getElementById("error").innerText =
+        "Username atau password salah!";
+    }
+}
+
+function logout() {
+    document.getElementById("app").style.display = "none";
+    document.getElementById("login").style.display = "block";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+}
+
+function simpanProduk() {
+    produk.push({
+        nama: namaProduk.value,
+        harga: hargaProduk.value,
+        stok: stokProduk.value
+    });
+    tampilProduk();
+}
+
+function tampilProduk() {
+    dataProduk.innerHTML = "";
+    produk.forEach(p => {
+        dataProduk.innerHTML += `
+        <tr>
+            <td>${p.nama}</td>
+            <td>${p.harga}</td>
+            <td>${p.stok}</td>
+        </tr>`;
+    });
+}
+
+function hapusProduk() {
+    produk.pop();
+    tampilProduk();
+}
+</script>
+
+</body>
+</html>
