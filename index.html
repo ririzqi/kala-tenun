@@ -5,296 +5,290 @@
 <title>KALA TENUN - Sistem Pemasaran</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: url("tenun-bg.jpg") repeat;
-    background-size: 300px;
+body{
+ margin:0;font-family:Arial,sans-serif;
+ background:
+ linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.35)),
+ url("tenun-bg.jpg") repeat;
+ background-size:300px;
 }
-
-#login {
-    width: 320px;
-    margin: 120px auto;
-    background: rgba(255,255,255,0.95);
-    padding: 25px;
-    border-radius: 6px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
+#login{
+ width:320px;margin:120px auto;
+ background:rgba(255,255,255,.95);
+ padding:25px;border-radius:8px;
+ box-shadow:0 0 20px rgba(0,0,0,.6);
 }
-
-#login h2 {
-    text-align: center;
-    color: #1e5a6a;
+#login h2{text-align:center;color:#1e5a6a}
+#login input{width:100%;padding:8px;margin:8px 0}
+#login button{
+ width:100%;padding:8px;
+ background:#1e5a6a;color:#fff;border:none
 }
-
-#login input {
-    width: 100%;
-    padding: 8px;
-    margin: 8px 0;
+#app{display:none;width:90%;margin:20px auto}
+.box{
+ background:rgba(255,255,255,.97);
+ border:3px solid #1e5a6a;
+ margin:25px 0;padding:15px;border-radius:8px
 }
-
-#login button {
-    width: 100%;
-    padding: 8px;
-    background: #1e5a6a;
-    color: white;
-    border: none;
-    cursor: pointer;
+.box h2{
+ background:#1e5a6a;color:#fff;
+ padding:10px;margin:-15px -15px 15px;
+ text-align:center
 }
-
-#app {
-    display: none;
-    width: 90%;
-    margin: 20px auto;
+input,select,textarea{
+ width:100%;padding:6px;margin:5px 0
 }
-
-.box {
-    background: rgba(255,255,255,0.97);
-    border: 3px solid #1e5a6a;
-    margin: 25px 0;
-    padding: 15px;
-    border-radius: 6px;
-}
-
-.box h2 {
-    background: #1e5a6a;
-    color: white;
-    padding: 10px;
-    margin: -15px -15px 15px -15px;
-    text-align: center;
-}
-
-input, textarea, select {
-    width: 100%;
-    padding: 6px;
-    margin: 5px 0;
-}
-
-button {
-    padding: 7px 14px;
-    margin: 5px;
-    cursor: pointer;
-}
-
-.btn {
-    background: #2fa4b6;
-    color: white;
-    border: none;
-}
-
-.btn-delete {
-    background: #e74c3c;
-    color: white;
-    border: none;
-}
-
-.btn-back {
-    background: #444;
-    color: white;
-    border: none;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-table, th, td {
-    border: 1px solid #333;
-}
-
-th, td {
-    padding: 6px;
-    text-align: center;
-}
+button{padding:7px 14px;margin:5px;cursor:pointer}
+.btn{background:#2fa4b6;color:#fff;border:none}
+.btn-delete{background:#e74c3c;color:#fff;border:none}
+.btn-back{background:#444;color:#fff;border:none}
+table{width:100%;border-collapse:collapse}
+table,th,td{border:1px solid #333}
+th,td{text-align:center;padding:6px}
+caption{font-weight:bold;padding:8px}
+img{border-radius:6px}
 </style>
 </head>
+
 <body>
 
 <div id="login">
-    <h2>LOGIN KALA TENUN</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="loginUser()">Login</button>
-    <p id="error" style="color:red;text-align:center;"></p>
+<h2>LOGIN KALA TENUN</h2>
+<input id="username" placeholder="Username">
+<input id="password" type="password" placeholder="Password">
+<button onclick="loginUser()">Login</button>
+<p id="error" style="color:red;text-align:center"></p>
 </div>
 
 <div id="app">
 <button class="btn-back" onclick="logout()">⬅ Logout</button>
 
-<!-- Produk -->
+<!-- 1. PRODUK -->
 <div class="box">
 <h2>Form Input Produk</h2>
-<input type="text" id="namaProduk" placeholder="Nama Produk">
-<input type="number" id="hargaProduk" placeholder="Harga">
-<input type="text" id="deskripsiProduk" placeholder="Deskripsi">
-<input type="number" id="stokProduk" placeholder="Stok">
-<select id="kategoriProduk">
-<option>Pilih Kategori</option>
-<option>Kain Tenun</option>
-<option>Aksesoris</option>
+
+<select id="pilihProduk" onchange="pilihBarang()">
+<option value="">Pilih Produk</option>
+<option value="p1">Kain Tenun Sumba</option>
+<option value="p2">Kain Tenun Flores</option>
+<option value="p3">Kain Tenun Jepara</option>
+<option value="p4">Kain Tenun Lombok</option>
+<option value="p5">Tas Tenun Nusa Tenggara</option>
 </select>
+
+<input id="namaProduk" readonly>
+<input id="hargaProduk" readonly>
+<input id="stokProduk" type="number" placeholder="Stok">
+
 <button class="btn" onclick="simpanProduk()">Simpan</button>
 <button class="btn-delete" onclick="hapusProduk()">Hapus</button>
+
 <table>
-<tr><th>Nama</th><th>Harga</th><th>Stok</th><th>Kategori</th></tr>
+<tr>
+<th>Gambar</th><th>Nama</th><th>Harga</th><th>Stok</th>
+</tr>
 <tbody id="dataProduk"></tbody>
 </table>
 </div>
 
-<!-- Promosi -->
+<!-- 2. PROMOSI -->
 <div class="box">
-<h2>Form Input Promosi / Diskon</h2>
-<input type="text" id="kodePromo" placeholder="Kode Promo">
-<input type="number" id="diskonPromo" placeholder="Diskon (%)">
-<input type="date" id="tanggalPromo">
-<input type="text" id="ketPromo" placeholder="Keterangan">
+<h2>Form Input Promosi</h2>
+<input id="kodePromo" placeholder="Kode Promo">
+<select id="diskonPromo">
+<option value="5">5%</option>
+<option value="10">10%</option>
+</select>
+<input id="tanggalPromo" type="date">
+<input id="ketPromo" placeholder="Keterangan">
 <button class="btn" onclick="simpanPromo()">Simpan</button>
-<button class="btn-delete" onclick="hapusPromo()">Hapus</button>
+
 <table>
 <tr><th>Kode</th><th>Diskon</th><th>Tanggal</th><th>Keterangan</th></tr>
 <tbody id="dataPromo"></tbody>
 </table>
 </div>
 
-<!-- Status Pesanan -->
+<!-- 3. STATUS PESANAN -->
 <div class="box">
-<h2>Form Update Status Pesanan</h2>
-<input type="text" id="idPesanan" placeholder="ID Pesanan">
-<input type="text" id="namaPelanggan" placeholder="Nama Pelanggan">
-<input type="date" id="tanggalPesanan">
+<h2>Status Pesanan</h2>
+<input id="idPesanan" placeholder="ID Pesanan">
+<input id="namaPelanggan" placeholder="Nama Pelanggan">
+<input id="tanggalPesanan" type="date">
 <select id="statusPesanan">
 <option>Diproses</option>
 <option>Dikirim</option>
 <option>Selesai</option>
 </select>
-<textarea id="ketPesanan" placeholder="Keterangan"></textarea>
 <button class="btn" onclick="simpanStatus()">Simpan</button>
-<button class="btn-delete" onclick="hapusStatus()">Hapus</button>
+
 <table>
 <tr><th>ID</th><th>Nama</th><th>Tanggal</th><th>Status</th></tr>
 <tbody id="dataStatus"></tbody>
 </table>
 </div>
 
-<!-- Penjualan -->
+<!-- 4. PENJUALAN -->
 <div class="box">
-<h2>Form Input Data Penjualan</h2>
-<input type="date" id="tanggalJual">
-<input type="text" id="namaJual" placeholder="Nama Produk">
-<input type="number" id="jumlahJual" placeholder="Jumlah">
-<input type="number" id="hargaJual" placeholder="Harga">
-<input type="number" id="totalJual" placeholder="Total" readonly>
+<h2>Data Penjualan</h2>
+
+<input id="tanggalJual" type="date">
+
+<select id="produkJual" onchange="isiHargaJual()">
+<option value="">Pilih Produk</option>
+<option value="p1">Kain Tenun Sumba</option>
+<option value="p2">Kain Tenun Flores</option>
+<option value="p3">Kain Tenun Jepara</option>
+<option value="p4">Kain Tenun Lombok</option>
+<option value="p5">Tas Tenun Nusa Tenggara</option>
+</select>
+
+<input id="jumlahJual" type="number" placeholder="Jumlah">
+<input id="hargaJual" readonly>
+<input id="totalJual" readonly placeholder="Total Otomatis">
+
 <button class="btn" onclick="simpanPenjualan()">Simpan</button>
-<button class="btn-delete" onclick="hapusPenjualan()">Hapus</button>
+
 <table>
-<tr><th>Tanggal</th><th>Produk</th><th>Jumlah</th><th>Harga</th><th>Total</th></tr>
-<tbody id="dataPenjualan"></tbody>
+<caption>TABEL DATA PENJUALAN</caption>
+<tr>
+<th>Tanggal</th><th>Produk</th><th>Jumlah</th><th>Harga</th><th>Total</th>
+</tr>
+<tbody id="dataPenjualan">
+<tr><td colspan="5">Belum ada data</td></tr>
+</tbody>
 </table>
 </div>
 
-<!-- Pencarian Produk -->
+<!-- 5. PENCARIAN -->
 <div class="box">
-<h2>Form Pencarian Produk</h2>
-<input type="text" id="namaCari" placeholder="Nama Produk">
-<select id="kategoriCari">
-<option>Pilih Kategori</option>
-<option>Kain Tenun</option>
-<option>Aksesoris</option>
-</select>
+<h2>Pencarian Produk</h2>
+<input id="namaCari" placeholder="Cari nama produk">
 <button class="btn" onclick="cariProduk()">Cari</button>
-<button class="btn-delete" onclick="resetCari()">Reset</button>
+
 <table>
-<tr><th>Nama</th><th>Harga</th><th>Stok</th><th>Kategori</th></tr>
+<tr><th>Nama</th><th>Harga</th><th>Stok</th></tr>
 <tbody id="hasilCari"></tbody>
 </table>
 </div>
 
-<!-- Ulasan -->
+<!-- 6. ULASAN -->
 <div class="box">
-<h2>Form Ulasan Produk</h2>
+<h2>Ulasan Produk</h2>
 <select id="produkUlasan">
 <option>Pilih Produk</option>
+<option>Kain Tenun Sumba</option>
+<option>Kain Tenun Flores</option>
+<option>Kain Tenun Jepara</option>
+<option>Kain Tenun Lombok</option>
+<option>Tas Tenun Nusa Tenggara</option>
 </select>
-<input type="number" id="ratingUlasan" placeholder="Rating (1-5)">
+<input id="ratingUlasan" type="number" min="1" max="5" placeholder="Rating 1-5">
 <textarea id="komentarUlasan" placeholder="Komentar"></textarea>
-<button class="btn" onclick="kirimUlasan()">Kirim Ulasan</button>
-<button class="btn-delete" onclick="batalUlasan()">Batal</button>
+<button class="btn" onclick="kirimUlasan()">Kirim</button>
+
+<table>
+<tr><th>Produk</th><th>Rating</th><th>Komentar</th></tr>
+<tbody id="dataUlasan"></tbody>
+</table>
 </div>
 
-<div class="box">
-<h2>Menu Ulasan</h2>
-<button class="btn" onclick="tampilSemuaUlasan()">Semua Ulasan</button>
-<button class="btn" onclick="tampilUlasanTertinggi()">Ulasan Tertinggi</button>
-<button class="btn" onclick="tampilUlasanTerbaru()">Ulasan Terbaru</button>
-<div id="listUlasan"></div>
 </div>
 
 <script>
-let produk = [], promo = [], status = [], penjualan = [], ulasan = [];
+let produk=[],promo=[],status=[],penjualan=[],ulasan=[];
 
-// LOGIN & LOGOUT
+const katalog={
+ p1:{nama:"Kain Tenun Sumba",harga:450000,gambar:"tenun1.jpg"},
+ p2:{nama:"Kain Tenun Flores",harga:420000,gambar:"tenun2.jpg"},
+ p3:{nama:"Kain Tenun Jepara",harga:400000,gambar:"tenun3.jpg"},
+ p4:{nama:"Kain Tenun Lombok",harga:380000,gambar:"tenun4.jpg"},
+ p5:{nama:"Tas Tenun Nusa Tenggara",harga:250000,gambar:"tas-tenun.jpg"}
+};
+
 function loginUser(){
-    if(username.value=="user" && password.value=="1234"){
-        login.style.display="none";
-        app.style.display="block";
-        updateProdukUlasan();
-    } else error.innerText="Username atau password salah!";
+ if(username.value=="user"&&password.value=="1234"){
+  login.style.display="none";app.style.display="block";
+ }else error.innerText="Login salah";
 }
-function logout(){app.style.display="none"; login.style.display="block";}
+function logout(){app.style.display="none";login.style.display="block"}
 
-// PRODUK
+function pilihBarang(){
+ let p=katalog[pilihProduk.value];
+ if(!p)return;
+ namaProduk.value=p.nama;
+ hargaProduk.value="Rp "+p.harga.toLocaleString();
+}
+
 function simpanProduk(){
-    produk.push({nama:namaProduk.value,harga:hargaProduk.value,stok:stokProduk.value,kategori:kategoriProduk.value});
-    tampilProduk(); updateProdukUlasan();
+ let k=katalog[pilihProduk.value];
+ if(!k)return alert("Pilih produk");
+ produk.push({...k,stok:stokProduk.value});
+ tampilProduk();
 }
-function hapusProduk(){produk.pop(); tampilProduk(); updateProdukUlasan();}
+
 function tampilProduk(){
-    dataProduk.innerHTML=""; produk.forEach(p=>dataProduk.innerHTML+=`<tr><td>${p.nama}</td><td>${p.harga}</td><td>${p.stok}</td><td>${p.kategori}</td></tr>`);
+ dataProduk.innerHTML="";
+ produk.forEach(p=>{
+  dataProduk.innerHTML+=`
+  <tr>
+  <td><img src="${p.gambar}" width="80"></td>
+  <td>${p.nama}</td>
+  <td>Rp ${p.harga.toLocaleString()}</td>
+  <td>${p.stok}</td>
+  </tr>`;
+ });
 }
-function updateProdukUlasan(){
-    produkUlasan.innerHTML='<option>Pilih Produk</option>'; produk.forEach(p=>produkUlasan.innerHTML+=`<option>${p.nama}</option>`);
+
+function simpanPromo(){
+ dataPromo.innerHTML+=`
+ <tr><td>${kodePromo.value}</td><td>${diskonPromo.value}%</td>
+ <td>${tanggalPromo.value}</td><td>${ketPromo.value}</td></tr>`;
 }
 
-// PROMO
-function simpanPromo(){promo.push({kode:kodePromo.value,diskon:diskonPromo.value,tanggal:tanggalPromo.value,keterangan:ketPromo.value}); tampilPromo();}
-function hapusPromo(){promo.pop(); tampilPromo();}
-function tampilPromo(){dataPromo.innerHTML=""; promo.forEach(p=>dataPromo.innerHTML+=`<tr><td>${p.kode}</td><td>${p.diskon}</td><td>${p.tanggal}</td><td>${p.keterangan}</td></tr>`);}
-
-// STATUS PESANAN
-function simpanStatus(){status.push({id:idPesanan.value,nama:namaPelanggan.value,tanggal:tanggalPesanan.value,status:statusPesanan.value,keterangan:ketPesanan.value}); tampilStatus();}
-function hapusStatus(){status.pop(); tampilStatus();}
-function tampilStatus(){dataStatus.innerHTML=""; status.forEach(s=>dataStatus.innerHTML+=`<tr><td>${s.id}</td><td>${s.nama}</td><td>${s.tanggal}</td><td>${s.status}</td></tr>`);}
-
-// PENJUALAN
-function simpanPenjualan(){ 
-    let total = jumlahJual.value*hargaJual.value; totalJual.value=total;
-    penjualan.push({tanggal:tanggalJual.value,nama:namaJual.value,jumlah:jumlahJual.value,harga:hargaJual.value,total:total}); tampilPenjualan();
+function simpanStatus(){
+ dataStatus.innerHTML+=`
+ <tr><td>${idPesanan.value}</td><td>${namaPelanggan.value}</td>
+ <td>${tanggalPesanan.value}</td><td>${statusPesanan.value}</td></tr>`;
 }
-function hapusPenjualan(){penjualan.pop(); tampilPenjualan();}
-function tampilPenjualan(){dataPenjualan.innerHTML=""; penjualan.forEach(p=>dataPenjualan.innerHTML+=`<tr><td>${p.tanggal}</td><td>${p.nama}</td><td>${p.jumlah}</td><td>${p.harga}</td><td>${p.total}</td></tr>`);}
 
-// PENCARIAN
+function isiHargaJual(){
+ let p=katalog[produkJual.value];
+ if(!p)return;
+ hargaJual.value=p.harga;
+}
+
+function simpanPenjualan(){
+ let total=jumlahJual.value*hargaJual.value;
+ totalJual.value=total;
+ if(dataPenjualan.innerText.includes("Belum")){
+  dataPenjualan.innerHTML="";
+ }
+ dataPenjualan.innerHTML+=`
+ <tr>
+ <td>${tanggalJual.value}</td>
+ <td>${produkJual.options[produkJual.selectedIndex].text}</td>
+ <td>${jumlahJual.value}</td>
+ <td>${hargaJual.value}</td>
+ <td>${total}</td>
+ </tr>`;
+}
+
 function cariProduk(){
-    let nama=namaCari.value.toLowerCase(), kat=kategoriCari.value;
-    let hasil=produk.filter(p=>(p.nama.toLowerCase().includes(nama)) && (kat=="Pilih Kategori" || p.kategori==kat));
-    hasilCari.innerHTML=""; hasil.forEach(h=>hasilCari.innerHTML+=`<tr><td>${h.nama}</td><td>${h.harga}</td><td>${h.stok}</td><td>${h.kategori}</td></tr>`);
+ hasilCari.innerHTML="";
+ produk.forEach(p=>{
+  if(p.nama.toLowerCase().includes(namaCari.value.toLowerCase())){
+   hasilCari.innerHTML+=`
+   <tr><td>${p.nama}</td><td>Rp ${p.harga.toLocaleString()}</td><td>${p.stok}</td></tr>`;
+  }
+ });
 }
-function resetCari(){hasilCari.innerHTML=""; namaCari.value=""; kategoriCari.value="Pilih Kategori";}
 
-// ULASAN
 function kirimUlasan(){
-    if(produkUlasan.value=="Pilih Produk" || !ratingUlasan.value || !komentarUlasan.value){alert("Lengkapi semua data!"); return;}
-    ulasan.push({produk:produkUlasan.value,rating:ratingUlasan.value,komentar:komentarUlasan.value});
-    alert("Ulasan berhasil dikirim!"); ratingUlasan.value=""; komentarUlasan.value=""; tampilSemuaUlasan();
+ dataUlasan.innerHTML+=`
+ <tr><td>${produkUlasan.value}</td><td>${ratingUlasan.value}</td><td>${komentarUlasan.value}</td></tr>`;
+ ratingUlasan.value="";komentarUlasan.value="";
 }
-function batalUlasan(){produkUlasan.value="Pilih Produk"; ratingUlasan.value=""; komentarUlasan.value="";}
-function tampilSemuaUlasan(){listUlasan.innerHTML="<ul>"+ulasan.map(u=>`<li>${u.produk}: ${u.rating} - ${u.komentar}</li>`).join("")+"</ul>";}
-function tampilUlasanTertinggi(){listUlasan.innerHTML="<ul>"+[...ulasan].sort((a,b)=>b.rating-a.rating).map(u=>`<li>${u.produk}: ${u.rating} - ${u.komentar}</li>`).join("")+"</ul>";}
-function tampilUlasanTerbaru(){listUlasan.innerHTML="<ul>"+ulasan.slice().reverse().map(u=>`<li>${u.produk}: ${u.rating} - ${u.komentar}</li>`).join("")+"</ul>";}
-
-// Auto total di penjualan
-jumlahJual.addEventListener("input",()=>{totalJual.value=jumlahJual.value*hargaJual.value;});
-hargaJual.addEventListener("input",()=>{totalJual.value=jumlahJual.value*hargaJual.value;});
 </script>
 
 </body>
